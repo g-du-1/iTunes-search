@@ -9,7 +9,7 @@ export function apiRouter() {
   router.get('/api/v1/search/', async (req, res) => {
     try {
       const searchResponse = await axios({
-        url: 'https://itunes.apple.com/search?term=five+finger&media=music&entity=musicArtist,album,song&country=US&limit=50',
+        url: 'https://itunes.apple.com/search?term=five+finger&media=music&entity=musicArtist,album,song&country=US&limit=10',
         method: 'get'
       });
       console.log(searchResponse);
