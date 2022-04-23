@@ -1,5 +1,5 @@
 import axios from 'axios';
 
-export function loadSearchAPI() {
-  return axios.get(`/api/v1/search/`).then(res => res.data);
+export function loadSearchAPI(term, offset) {
+  return axios.get(`/api/v1/search/?term=${term}&offset=${offset}`).then(res => res.data);
 }
