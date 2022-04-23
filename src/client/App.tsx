@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'; // Pages
 import { Header } from './components/Header';
 import { Home } from './components/Home';
 import { SideMenu } from './components/SideMenu';
-import { SearchForm } from './components/SearchForm';
+import { Search } from './components/Search';
 
 export const App = () => {
 
@@ -18,7 +18,7 @@ export const App = () => {
         <Toolbar />
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/search' element={<SearchForm />} />
+            <Route path='/search' element={<Search />} />
           </Routes>
         </Box>
       </Box>

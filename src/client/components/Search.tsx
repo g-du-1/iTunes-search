@@ -7,7 +7,7 @@ import ListItem from '@mui/material/ListItem';
 import React from 'react';
 import { loadSearchAPI } from '../utils/api-facade';
 
-export const SearchForm: React.FC = () => {
+export const Search: React.FC = () => {
   const [results, setResults] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(true);
 
