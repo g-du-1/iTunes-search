@@ -18,7 +18,7 @@ export const App = () => {
         <Toolbar />
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/fetch-example' element={<SearchForm />} />
+            <Route path='/search' element={<SearchForm />} />
           </Routes>
         </Box>
       </Box>
