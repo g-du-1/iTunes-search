@@ -30,8 +30,13 @@ const ArtistName = styled(Typography)`
   font-weight: bold;
 `;
 
-const CollectionName = styled(Typography)`
-  margin-top: 0.5rem;
+const CardRow = styled(Typography)`
+  margin-top: .5rem;
+`;
+
+const TrackAlbum = styled(Typography)`
+  margin-top: .5rem;
+  font-size: .75rem;
 `;
 
 export const ResultCard: React.FC = ({ result }) => (
@@ -39,7 +44,13 @@ export const ResultCard: React.FC = ({ result }) => (
     <CustomCardHeader title={replaceWrapperTypeTxt(result.wrapperType)} />
     <CustomCardContent>
       <ArtistName>{result.artistName}</ArtistName>
-      {result.wrapperType === 'artist' ? '' : <CollectionName>{result.collectionName}</CollectionName>}
+      {result.wrapperType === 'collection' && <CardRow>{result.collectionName}</CardRow>}
+      {result.wrapperType === 'track' && (
+        <>
+          <CardRow>{result.trackName}</CardRow>
+          <TrackAlbum>{result.collectionName}</TrackAlbum>
+        </>
+      )}
     </CustomCardContent>
   </Card>
 );
