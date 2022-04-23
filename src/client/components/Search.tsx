@@ -1,53 +1,63 @@
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardHeader from '@mui/material/CardHeader';
 import Grid from '@mui/material/Grid';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import { ResultCard } from './ResultCard';
 import React from 'react';
 import { loadSearchAPI } from '../utils/api-facade';
 
 export const Search: React.FC = () => {
+  const [inputText, setInputText] = React.useState('');
+  const inputHandler = (e) => {
+    const lowerCase = e.target.value.toLowerCase();
+    setInputText(lowerCase);
+  };
+
   const [results, setResults] = React.useState(null);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  React.useEffect(() => {
-    let cancelled = false;
-    const fetchResults = async () => {
-      setIsLoading(true);
-      const results = await loadSearchAPI();
-      console.log(results)
-      if (!cancelled) {
-        setResults(results);
-        setIsLoading(false);
-      }
-    };
-
-    fetchResults();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const fetchResults = async () => {
+    setIsLoading(true);
+    try {
+      const results = await loadSearchAPI(inputText, 0);
+      console.log(results);
+      results.length > 0 ? setResults(results) : setResults(null);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
   return (
-      <Grid item xs={12}>
-        <Card>
-          <CardHeader title='Search Results' />
-          <CardContent>
-            <List>
-              {results.map((result) => (
-                <ListItem key={result.collectionId}>
-                  <h2>{result.artistName}</h2>
-                  <p>{result.collectionName}</p>
-                </ListItem>
-              ))}
-            </List>
-          </CardContent>
-        </Card>
-      </Grid>
+    <Grid container spacing={1}>
+      <TextField
+        id='outlined-basic'
+        onChange={inputHandler}
+        variant='outlined'
+        fullWidth
+        label='Search'
+        value={inputText}
+        sx={{ width: '15rem', mb: 2, mr: 2 }}
+      />
+      <Button variant='contained' onClick={fetchResults} sx={{ mb: 2 }}>
+        Search
+      </Button>
+      {results ? (
+        <Grid container spacing={2}>
+          {results.map((result, index) => (
+            <Grid item sx={{ width: '100%' }} sm={6} md={4} lg={3} key={index}>
+              <ResultCard result={result} />
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <Grid container>
+          <div>No results</div>
+        </Grid>
+      )}
+    </Grid>
   );
 };
