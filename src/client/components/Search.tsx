@@ -13,11 +13,12 @@ export const Search: React.FC = () => {
     setInputText(lowerCase);
   };
 
+  // For a big project I would use Redux for state management.
   const [offset, setOffset] = useState(0);
   const [results, setResults] = useState([]);
   const [hasFetched, setHasFetched] = useState(false);
 
-  // TODO Do proper error handling
+  // TODO Do proper error handling.
   const handleSearchClick = async () => {
     try {
       const newResults = await loadSearchAPI(inputText, 0);
@@ -29,7 +30,7 @@ export const Search: React.FC = () => {
     }
   };
 
-  // TODO Handle reaching the end of results
+  // TODO Handle reaching the end of results.
   const loadMore = async () => {
     try {
       const newResults = await loadSearchAPI(inputText, offset);
@@ -40,6 +41,17 @@ export const Search: React.FC = () => {
       console.log(error);
     }
   };
+
+  const loaderStyles = {
+    marginTop: '5rem',
+    textAlign: 'center'
+  };
+
+  const infiniteScrollStyles = {
+    width: '100%'
+  }
+
+  // TODO Indicate loading with a spinner
 
   return (
     <Grid container spacing={1}>
@@ -56,7 +68,7 @@ export const Search: React.FC = () => {
         Search
       </Button>
       {results.length > 0 ? (
-        <InfiniteScroll dataLength={results.length} next={loadMore} hasMore={true} loader={<h4>Loading...</h4>}>
+        <InfiniteScroll style={infiniteScrollStyles} dataLength={results.length} next={loadMore} hasMore={true} loader={<h4 style={loaderStyles}>Scroll here to load more...</h4>}>
           <Grid container spacing={2}>
             {results.map((result, index) => (
               <Grid item sx={{ width: '100%' }} sm={6} md={4} lg={3} key={index}>
