@@ -1,4 +1,4 @@
-import FetchIcon from '@mui/icons-material/CloudDownload';
+import SearchIcon from '@mui/icons-material/Search';
 import HomeIcon from '@mui/icons-material/Home';
 import { Divider, Drawer, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import React from 'react';
@@ -28,11 +28,11 @@ export const SideMenu: React.FC = () => {
       </List>
       <Divider />
       <List>
-        <ListItem button component={RouterLink} to='/fetch-example'>
+        <ListItem button component={RouterLink} to='/search'>
           <ListItemIcon>
-            <FetchIcon />
+            <SearchIcon />
           </ListItemIcon>
-          <ListItemText primary='Fetch' />
+          <ListItemText primary='Search' />
         </ListItem>
       </List>
     </Drawer>
