@@ -6,6 +6,9 @@ export function apiRouter() {
   const router = Router();
   router.use(bodyParser.json());
 
+  // TODO Validate request queries, do proper error handling
+  // TODO Offset is undocumented, make sure it returns everything correctly
+  // Check if there is rate limiting and handle it
   router.get('/api/v1/search/', async (req, res) => {
     try {
       const term = req.query.term;
