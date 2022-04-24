@@ -7,7 +7,7 @@ import React from 'react';
 
 export const Home: React.FC = () => {
   return (
-    <Grid item xs={12}>
+    <Grid item xs={12} sx={{ mx: -1.25, my: -1.5 }}>
       <Card>
         <CardHeader title='iTunes Search' />
         <CardContent>
