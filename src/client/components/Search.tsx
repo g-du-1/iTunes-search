@@ -7,17 +7,20 @@ import { loadSearchAPI } from '../utils/api-facade';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Typography } from '@mui/material';
 
+// TODO Add Typescript interfaces.
+// I haven't used Typescript before so my usage might not be according to best practices.
+
 export const Search: React.FC = () => {
-  const [inputText, setInputText] = useState('');
+  const [inputText, setInputText] = useState<string>('');
   const inputHandler = (e) => {
-    const lowerCase = e.target.value.toLowerCase();
+    const lowerCase: string = e.target.value.toLowerCase();
     setInputText(lowerCase);
   };
 
   // For a big project I would use Redux for state management.
-  const [offset, setOffset] = useState(0);
+  const [offset, setOffset] = useState<number>(0);
   const [results, setResults] = useState([]);
-  const [hasFetched, setHasFetched] = useState(false);
+  const [hasFetched, setHasFetched] = useState<boolean>(false);
 
   // TODO Do proper error handling.
   const handleSearchClick = async (): Promise<void> => {
@@ -43,14 +46,14 @@ export const Search: React.FC = () => {
     }
   };
 
-  const loaderStyles = {
+  const loaderStyles: object = {
     marginTop: '5rem',
-    textAlign: 'center'
+    textAlign: 'center',
   };
 
-  const infiniteScrollStyles = {
-    width: '100%'
-  }
+  const infiniteScrollStyles: object = {
+    width: '100%',
+  };
 
   // TODO Indicate loading with a spinner
   // TODO Fix issue of infinite scroll not working when the window is not scrollable
@@ -70,11 +73,22 @@ export const Search: React.FC = () => {
         Search
       </Button>
       {results.length > 0 ? (
-        <InfiniteScroll style={infiniteScrollStyles} dataLength={results.length} next={loadMore} hasMore={true} loader={<h4 style={loaderStyles}>Scroll here to load more...</h4>}>
+        <InfiniteScroll
+          style={infiniteScrollStyles}
+          dataLength={results.length}
+          next={loadMore}
+          hasMore={true}
+          loader={<h4 style={loaderStyles}>Scroll here to load more...</h4>}
+        >
           <Grid container spacing={2}>
             {results.map((result, index) => (
               <Grid item sx={{ width: '100%' }} sm={6} md={4} lg={3} key={index}>
-                <ResultCard result={result} />
+                <ResultCard
+                  artistName={result.artistName}
+                  wrapperType={result.wrapperType}
+                  collectionName={result.collectionName}
+                  trackName={result.trackName}
+                />
               </Grid>
             ))}
           </Grid>
