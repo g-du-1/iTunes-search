@@ -1,4 +1,6 @@
 import Grid from '@mui/material/Grid';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { ResultCard } from './ResultCard';
@@ -56,43 +58,48 @@ export const Search: React.FC = () => {
   };
 
   // TODO Indicate loading with a spinner
-  // TODO Fix issue of infinite scroll not working when the window is not scrollable
+  // TODO Fix issue of infinite scroll not working when the window is not scrollable: https://github.com/ankeetmaini/react-infinite-scroll-component/issues/171
+  // Because of this issue the cards are laid out in one column as a workaround to avoid the infinite scroll breaking on larger screens.
 
   return (
-    <Grid container spacing={1}>
-      <TextField
-        id='outlined-basic'
-        onChange={inputHandler}
-        variant='outlined'
-        fullWidth
-        label='Search'
-        value={inputText}
-        sx={{ width: '15rem', mb: 2, mr: 2 }}
-      />
-      <Button variant='contained' onClick={handleSearchClick} sx={{ mb: 2 }}>
-        Search
-      </Button>
+    <Grid container spacing={1} sx={{ ml: -.75 }}>
+      <Grid container sx={{ m: -.75 }}>
+        <TextField
+          id='outlined-basic'
+          onChange={inputHandler}
+          variant='outlined'
+          fullWidth
+          label='Search'
+          value={inputText}
+          sx={{ width: '15rem', mb: 2, mr: 1 }}
+        />
+        <Button variant='contained' onClick={handleSearchClick} sx={{ mb: 2 }}>
+          Search
+        </Button>
+      </Grid>
       {results.length > 0 ? (
-        <InfiniteScroll
-          style={infiniteScrollStyles}
-          dataLength={results.length}
-          next={loadMore}
-          hasMore={true}
-          loader={<h4 style={loaderStyles}>Scroll here to load more...</h4>}
-        >
-          <Grid container spacing={2}>
-            {results.map((result, index) => (
-              <Grid item sx={{ width: '100%' }} sm={6} md={4} lg={3} key={index}>
-                <ResultCard
-                  artistName={result.artistName}
-                  wrapperType={result.wrapperType}
-                  collectionName={result.collectionName}
-                  trackName={result.trackName}
-                />
-              </Grid>
-            ))}
-          </Grid>
-        </InfiniteScroll>
+        <Grid container sx={{ ml: -2.5 }}>
+          <InfiniteScroll
+            style={infiniteScrollStyles}
+            dataLength={results.length}
+            next={loadMore}
+            hasMore={true}
+            loader={<h4 style={loaderStyles}>Scroll here to load more...</h4>}
+          >
+            <List>
+              {results.map((result, index) => (
+                <ListItem key={index}>
+                  <ResultCard
+                    artistName={result.artistName}
+                    wrapperType={result.wrapperType}
+                    collectionName={result.collectionName}
+                    trackName={result.trackName}
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </InfiniteScroll>
+        </Grid>
       ) : (
         hasFetched && (
           <Grid container>

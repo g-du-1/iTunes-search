@@ -47,7 +47,7 @@ const TrackAlbum = styled(Typography)`
 `;
 
 export const ResultCard: React.FC<IResultProps> = (props: IResultProps) => (
-  <Card sx={{ height: '100%' }}>
+  <Card sx={{ height: '100%', width: '20.875rem' }}>
     <CustomCardHeader title={replaceWrapperTypeTxt(props.wrapperType)} />
     <CustomCardContent>
       <ArtistName>{props.artistName}</ArtistName>
