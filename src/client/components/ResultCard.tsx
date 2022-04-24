@@ -5,7 +5,14 @@ import CardHeader from '@mui/material/CardHeader';
 import React from 'react';
 import { styled } from '@mui/system';
 
-const replaceWrapperTypeTxt: string = (wrapperType: string) => {
+interface IResultProps {
+  wrapperType: string,
+  artistName: string,
+  collectionName: string,
+  trackName: string
+}
+
+const replaceWrapperTypeTxt = (wrapperType: string): string => {
   if (wrapperType === 'artist') {
     return 'Artist';
   } else if (wrapperType === 'collection') {
@@ -16,8 +23,8 @@ const replaceWrapperTypeTxt: string = (wrapperType: string) => {
 };
 
 const CustomCardHeader = styled(CardHeader)`
-  background-color: #1976d2;
-  color: #fff;
+  background-color: #1976D2;
+  color: #FFF;
 `;
 
 const CustomCardContent = styled(CardContent)`
@@ -39,16 +46,16 @@ const TrackAlbum = styled(Typography)`
   font-size: .75rem;
 `;
 
-export const ResultCard: React.FC = ({ result }) => (
+export const ResultCard: React.FC<IResultProps> = (props: IResultProps) => (
   <Card sx={{ height: '100%' }}>
-    <CustomCardHeader title={replaceWrapperTypeTxt(result.wrapperType)} />
+    <CustomCardHeader title={replaceWrapperTypeTxt(props.wrapperType)} />
     <CustomCardContent>
-      <ArtistName>{result.artistName}</ArtistName>
-      {result.wrapperType === 'collection' && <CardRow>{result.collectionName}</CardRow>}
-      {result.wrapperType === 'track' && (
+      <ArtistName>{props.artistName}</ArtistName>
+      {props.wrapperType === 'collection' && <CardRow>{props.collectionName}</CardRow>}
+      {props.wrapperType === 'track' && (
         <>
-          <CardRow>{result.trackName}</CardRow>
-          <TrackAlbum>{result.collectionName}</TrackAlbum>
+          <CardRow>{props.trackName}</CardRow>
+          <TrackAlbum>{props.collectionName}</TrackAlbum>
         </>
       )}
     </CustomCardContent>
