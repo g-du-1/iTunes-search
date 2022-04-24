@@ -5,6 +5,7 @@ import { ResultCard } from './ResultCard';
 import React, { useState } from 'react';
 import { loadSearchAPI } from '../utils/api-facade';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { Typography } from '@mui/material';
 
 export const Search: React.FC = () => {
   const [inputText, setInputText] = useState('');
@@ -19,7 +20,7 @@ export const Search: React.FC = () => {
   const [hasFetched, setHasFetched] = useState(false);
 
   // TODO Do proper error handling.
-  const handleSearchClick = async () => {
+  const handleSearchClick = async (): Promise<void> => {
     try {
       const newResults = await loadSearchAPI(inputText, 0);
       setResults(newResults);
@@ -31,7 +32,7 @@ export const Search: React.FC = () => {
   };
 
   // TODO Handle reaching the end of results.
-  const loadMore = async () => {
+  const loadMore = async (): Promise<void> => {
     try {
       const newResults = await loadSearchAPI(inputText, offset);
       setResults(results.concat(newResults));
@@ -52,6 +53,7 @@ export const Search: React.FC = () => {
   }
 
   // TODO Indicate loading with a spinner
+  // TODO Fix issue of infinite scroll not working when the window is not scrollable
 
   return (
     <Grid container spacing={1}>
@@ -80,7 +82,7 @@ export const Search: React.FC = () => {
       ) : (
         hasFetched && (
           <Grid container>
-            <div>No results</div>
+            <Typography>No results</Typography>
           </Grid>
         )
       )}
